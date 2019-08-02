@@ -4,6 +4,7 @@ import org.hibernate.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.exception.JDBCConnectionException;
 import org.hibernate.service.ServiceRegistry;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.Properties;
 public class PersonDaoDatabase implements PersonDao {
     private static final SessionFactory SESSION_FACTORY;
     private List<String> query = null;
+    private int tries = 1;
 
     static {
         Configuration config = new Configuration();
@@ -47,6 +49,7 @@ public class PersonDaoDatabase implements PersonDao {
         }
 
         try {
+            ++tries;
             transaction = session.beginTransaction();
             //session.delete(person);
             switch(operation) {
@@ -77,14 +80,19 @@ public class PersonDaoDatabase implements PersonDao {
             }
             transaction.commit();
         } catch(HibernateException e) {
-            if(transaction != null) {
+            if (transaction != null) {
                 transaction.rollback();
+            }
+
+            if(tries <= 3 && e instanceof JDBCConnectionException) {
+                System.out.println("Reconnecting...");
+                return databaseOperation(data, operation);
             }
             e.printStackTrace();
         } finally {
             session.close();
         }
-
+        tries = 1;
         return people;
     }
 
@@ -144,6 +152,11 @@ public class PersonDaoDatabase implements PersonDao {
     @Override
     public void getPersonTallerThan(double height) {
         query.add("height > " + height);
+    }
+
+    @Override
+    public void getPersonByCpf(String cpf) {
+        query.add("cpf = " + cpf);
     }
 
     @Override

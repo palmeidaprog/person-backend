@@ -16,6 +16,7 @@ public interface PersonDao {
     void getPersonSmallerThan(double height);
     void getPersonYougerThan(int age);
     void getPersonOlderThan(int age);
+    void getPersonByCpf(String cpf);
     List<Person> commitQuery();
     List<Person> getAll();
 }

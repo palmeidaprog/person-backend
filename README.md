@@ -18,7 +18,6 @@ public class SpringHibernateConfig {
     @Bean
     public DataSource datasource() {
         return DataSourceBuilder.create()
-                //.driverClassName("com.mysql.cj.jdbc.Driver")
                 .driverClassName("com.mysql.jdbc.Driver")
                 .url("jdbc:mysql://hostaname_here/database_here")
                 .username("username_here")
@@ -38,21 +37,15 @@ public class SpringHibernateConfig {
 
 <hibernate-configuration>
     <session-factory>
-        <!-- Create table if doesn't exists -->
         <property name="hibernate.hbm2ddl.auto">update</property>
-        <!-- Choose database connector -->
         <property name="hibernate.connection.driver_class">
             com.mysql.jdbc.Driver</property>
-        <!-- Indicate to the database to generate suitable SQL -->
         <property name="hibernate.dialect">
             org.hibernate.dialect.MySQL5Dialect</property>
-        <!-- URL to the database -->
         <property name="hibernate.connection.url">
             jdbc:mysql://url/database_name</property>
-        <property name="hibernate.connection.username">username_here
-            </property>
+        <property name="hibernate.connection.username">username_here</property>
         <property name="hibernate.connection.password">password_here</property>
-        <!-- Class to be mapped -->
         <mapping class="hello.Person"></mapping>
     </session-factory>
 </hibernate-configuration>
