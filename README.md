@@ -7,7 +7,8 @@ For this project to work it is important to have a hibernate.cfg.xml and/or a cl
 
 ### 1 - Using a class:
 
-```import org.springframework.boot.jdbc.DataSourceBuilder;
+```java
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import javax.sql.DataSource;
@@ -29,7 +30,7 @@ public class SpringHibernateConfig {
 
 ### 2 - Using hibernate.cfg.xml file inside src/main/resources:
 
-```
+```xml
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE hibernate-configuration PUBLIC
         "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
