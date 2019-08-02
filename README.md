@@ -1,4 +1,4 @@
-#Person Backend 
+# Person Backend 
 Simple Backend that manages a MySQL database with one table Person using and Hibernate and Spring for RESTful implementation
 
 ## Important:
